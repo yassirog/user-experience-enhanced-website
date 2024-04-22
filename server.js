@@ -130,6 +130,14 @@ app.post("/addStakeholder/:id", async function (request, response) {
 
 
     stakeholder.push(bedrijfId, aangevinkteRadiobox, name);
+// Hier een push naar de server, hoe doe ik dat bro?!
+
+
+
+
+
+
+
 
     console.log(stakeholder);
   } catch (error) {
