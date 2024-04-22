@@ -188,3 +188,7 @@ button {
   background-color: var(--primarypurple);
   cursor: pointer;
 }
+
+.succesvol {
+  color: lightgreen;
+}

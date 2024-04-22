@@ -101,57 +101,57 @@ app.get("/addStakeholder/:id", function (request, response) {
   })
 });
 
-// app.post("/addStakeholder/:id", async function (request, response) {
-//   try {
+app.post("/addStakeholder/:id", async function (request, response) {
+  try {
 
-//     const medewerkers = request.body.medewerkers;
-//     const financiers = request.body.financiers;
-//     const leveranciers = request.body.leveranciers;
-//     const klanten = request.body.klanten;
-//     const omgeving = request.body.omgeving;
-//     const name = request.body.message;
-//     const stakeholder = [];
-//     let aangevinkteRadiobox;
-//     if (medewerkers) {
-//         aangevinkteRadiobox = "medewerkers";
-//     } else if (financiers) {
-//         aangevinkteRadiobox = "financiers";
-//     } else if (leveranciers) {
-//         aangevinkteRadiobox = "leveranciers";
-//     } else if (klanten) {
-//         aangevinkteRadiobox = "klanten";
-//     } else if (omgeving) {
-//         aangevinkteRadiobox = "omgeving";
-//     }
+    const medewerkers = request.body.medewerkers;
+    const financiers = request.body.financiers;
+    const leveranciers = request.body.leveranciers;
+    const klanten = request.body.klanten;
+    const omgeving = request.body.omgeving;
+    const name = request.body.message;
+    const stakeholder = [];
+    let aangevinkteRadiobox;
+    if (medewerkers) {
+        aangevinkteRadiobox = "medewerkers";
+    } else if (financiers) {
+        aangevinkteRadiobox = "financiers";
+    } else if (leveranciers) {
+        aangevinkteRadiobox = "leveranciers";
+    } else if (klanten) {
+        aangevinkteRadiobox = "klanten";
+    } else if (omgeving) {
+        aangevinkteRadiobox = "omgeving";
+    }
     
-//     console.log('Bedrijf: ' + bedrijfId);
-//     console.log('Type: ' + aangevinkteRadiobox);
-//     console.log('Naam: ' + name)
+    console.log('Bedrijf: ' + bedrijfId);
+    console.log('Type: ' + aangevinkteRadiobox);
+    console.log('Naam: ' + name)
 
 
-//     stakeholder.push( aangevinkteRadiobox, name);
+    stakeholder.push(bedrijfId, aangevinkteRadiobox, name);
 
-//     console.log(stakeholder);
-//   } catch (error) {
-//     console.error("Error handling POST request:", error);
-//     response.status(500).send("Error handling POST request");
-//   }
-// });
+    console.log(stakeholder);
+  } catch (error) {
+    console.error("Error handling POST request:", error);
+    response.status(500).send("Error handling POST request");
+  }
+});
 
-// // Als we vanuit de browser een POST doen op de detailpagina van een persoon
-// // Als we vanuit de browser een POST doen op de detailpagina van een persoon
-// app.post("/bedrijf/:id", async function (request, response) {
-//   try {
-// 	const bedrijfId = request.body.bedrijf;
-//   console.log(bedrijfId);
+// Als we vanuit de browser een POST doen op de detailpagina van een persoon
+// Als we vanuit de browser een POST doen op de detailpagina van een persoon
+app.post("/bedrijf/:id", async function (request, response) {
+  try {
+	const bedrijfId = request.body.bedrijf;
+  console.log(bedrijfId);
 
 
 
-//   } catch (error) {
-//     console.error("Error handling POST request:", error);
-//     response.status(500).send("Error handling POST request");
-//   }
-// });
+  } catch (error) {
+    console.error("Error handling POST request:", error);
+    response.status(500).send("Error handling POST request");
+  }
+});
 
 // Stel het poortnummer in waar express op moet gaan luisteren
 app.set("port", process.env.PORT || 8000);

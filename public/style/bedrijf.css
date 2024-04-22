@@ -181,8 +181,14 @@ body {
 .introductie {
 	text-align: center;
 	margin: 1em;
+  margin-top: 2em;
 
 
 	h1 {
 		margin: 0.5em;
 	}
+}
+
+progress {
+  color: purple;
+}
