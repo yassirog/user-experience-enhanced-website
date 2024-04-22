@@ -19,44 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// NIEUWE FUNCTIE VOOR FORM LATEN INLADEN 
-const addForm = document.querySelector('form.kaas');
-const successMessage = document.getElementById('successMessage');
-const stakeholder = [];
-
-addForm.addEventListener('submit', submitAddFormHandler);
-
-function submitAddFormHandler(event) {
-    console.log('form submitted!');
-    const messageText = document.getElementById("name").value;
-
-    // Vind de geselecteerde radio-input
-    const selectedInput = document.querySelector('input[type="radio"]:checked');
-
-    if (selectedInput) {
-        // Haal de waarde op van de 'name' attribuut van de geselecteerde radio-input
-        const selectedType = selectedInput.getAttribute("name");
-        // Geef de naam weer in de console
-        console.log("Geselecteerde naam: " + selectedType);
-        stakeholder.push("Naam: " + messageText, "Type: " + selectedType);
-
-        // Of toon het op een andere manier op de pagina
-    } else {
-        event.preventDefault();
-        alert("Selecteer een type!"); // Waarschuw als er geen type is geselecteerd (kan nog verandert worden met n divje)
-        return; // Stop de functie hier als er geen type is geselecteerd
-    }
-
-    // Als er een type is geselecteerd, stuur het formulier door
-    successMessage.style.display = 'block';
-    setTimeout(function () {
-        successMessage.style.display = 'none';
-    }, 5000);
-    console.log(stakeholder);
-    event.preventDefault();
-}
-    
-
 
 
 // console.log('Type: ' + aangevinkteRadiobox);

@@ -103,7 +103,7 @@ app.get("/addStakeholder/:id", function (request, response) {
 
 app.post("/addStakeholder/:id", async function (request, response) {
   try {
-
+    const bedrijfId = request.params.id;
     const medewerkers = request.body.medewerkers;
     const financiers = request.body.financiers;
     const leveranciers = request.body.leveranciers;
