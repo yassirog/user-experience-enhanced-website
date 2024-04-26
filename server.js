@@ -87,21 +87,21 @@ app.post("/bedrijf/:id", async function (request, response) {
   }
 });
 
-app.get("/addStakeholder/:id", function (request, response) {
+app.get("/stakeholder/:id", function (request, response) {
   // Gebruik de request parameter id en haal de juiste persoon uit de WHOIS API op
   fetchJson(companyList + '/' + request.params.id).then(
 	(companyData) => {
 
     fetchJson(stakeholders + '/' + request.params.id).then(
       (stakeholderData) => {
-      response.render("addStakeholder", {company: companyData.data, stakers: stakeholderData.data });
+      response.render("stakeholder", {company: companyData.data, stakers: stakeholderData.data });
 
     // Render person.ejs uit de views map en geef de opgehaalde data mee als variable, genaamd bedrijf
     });
   })
 });
 
-app.post("/addStakeholder/:id", async function (request, response) {
+app.post("/stakeholder/:id", async function (request, response) {
   try {
     const bedrijfId = request.params.id;
     const medewerkers = request.body.medewerkers;
@@ -131,7 +131,23 @@ app.post("/addStakeholder/:id", async function (request, response) {
 
     stakeholder.push(bedrijfId, aangevinkteRadiobox, name);
 // Hier een push naar de server, hoe doe ik dat bro?!
-
+// Yassir, deze drie variabelen heb je nodig:
+// bedrijfId
+// aangevinkteRadiobox 👊
+// name
+fetch('https://fdnd-agency.directus.app/items/hf_stakeholders', {
+  method: 'POST',
+  body: JSON.stringify({
+    company_id: bedrijfId,
+    type: aangevinkteRadiobox,
+    name: name
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8'
+  }
+}).then((postReponse) => {
+  response.redirect(303, '/bedrijf/' + bedrijfId)
+})
 
 
 
