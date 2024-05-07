@@ -39,9 +39,17 @@ function submitAddFormHandler(event) {
         
         console.log("Geselecteerde naam: " + selectedType);
         stakeholder.push("Naam: " + messageText, "Type: " + selectedType);
+        
+        let form = this;
+        let data = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: new URLSearchParams(data),
+          }
+        )
 
     } else {
-        event.preventDefault();
         alert("Selecteer een type!"); // Waarschuw als er geen type is geselecteerd (kan nog verandert worden met n divje)
         return; // Stop de functie hier als er geen type is geselecteerd
     }
@@ -51,7 +59,9 @@ function submitAddFormHandler(event) {
     setTimeout(function () {
         successMessage.style.display = 'none';
     }, 5000);
+
     event.preventDefault();
 }
+
 
 

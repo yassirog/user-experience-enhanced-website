@@ -26,155 +26,109 @@ app.use(express.urlencoded({ extended: true }));
 const apiUrl = "https://fdnd-agency.directus.app/items/";
 const sdgList = apiUrl + "hf_sdgs";
 const companyList = apiUrl + "hf_companies";
-const stakeholders = apiUrl + "hf_stakeholders"
+const stakeholders = apiUrl + "hf_stakeholders";
 
+// GET && POST voor Index
 app.get("/", function (request, response) {
   fetchJson(sdgList).then((sdgsUitDeAPI) => {
     fetchJson(companyList).then((companiesUitDeAPI) => {
-      response.render("index", { sdgs: sdgsUitDeAPI.data, companies: companiesUitDeAPI.data });
+      response.render("index", {
+        sdgs: sdgsUitDeAPI.data,
+        companies: companiesUitDeAPI.data,
+      });
     });
-  });
-});
-
-app.get("/sdg/:sdg", function (request, response) {
-  fetchJson(sdgList + '?filter={"id":' + request.params.sdg + "}").then(
-    (sdgDetail) => {
-      response.render("sdg", { sdg: sdgDetail.data[0] });
-    }
-  );
-});
-
-app.get("/inlogpagina", function (request, response) {
-  fetchJson(companyList).then((companiesUitDeAPI) => {
-    response.render("inlogpagina", { companies: companiesUitDeAPI.data });
   });
 });
 
 app.post("/", async function (request, response) {
-  try {
-	const bedrijfId = request.body.companies;
-  console.log(bedrijfId);
-  response.redirect('/bedrijf/' + bedrijfId);
+  const bedrijfId = request.body.companies;
 
-  } catch (error) {
-    console.error("Error handling POST request:", error);
-    response.status(500).send("Error handling POST request");
-  }
+  console.log(bedrijfId);
+  response.redirect("/dashboard/" + bedrijfId);
 });
 
-app.get("/bedrijf/:id", function (request, response) {
+// GET && POST voor Dashboard
+app.get("/dashboard/:id", function (request, response) {
   // Gebruik de request parameter id en haal de juiste persoon uit de WHOIS API op
-  fetchJson(companyList + '/' + request.params.id).then(
-	(companyData) => {
-
-    fetchJson(stakeholders + '/' + request.params.id).then(
+  fetchJson(companyList + "/" + request.params.id).then((companyData) => {
+    fetchJson(stakeholders + "/" + request.params.id).then(
       (stakeholderData) => {
-      response.render("bedrijf", {company: companyData.data, stakers: stakeholderData.data });
-
-    // Render person.ejs uit de views map en geef de opgehaalde data mee als variable, genaamd bedrijf
-    });
-  })
+        response.render("dashboard", {
+          company: companyData.data,
+          stakers: stakeholderData.data,
+        });
+      }
+    );
+  });
 });
 
-app.post("/bedrijf/:id", async function (request, response) {
-  try {
+app.post("/dashboard/:id", async function (request, response) {
   console.log(bedrijfId);
-  response.redirect('/bedrijf/' + bedrijfId);
-
-  } catch (error) {
-    console.error("Error handling POST request:", error);
-    response.status(500).send("Error handling POST request");
-  }
+  response.redirect("/dashboard/" + bedrijfId);
 });
 
 app.get("/stakeholder/:id", function (request, response) {
   // Gebruik de request parameter id en haal de juiste persoon uit de WHOIS API op
-  fetchJson(companyList + '/' + request.params.id).then(
-	(companyData) => {
-
-    fetchJson(stakeholders + '/' + request.params.id).then(
+  fetchJson(companyList + "/" + request.params.id).then((companyData) => {
+    fetchJson(stakeholders + "/" + request.params.id).then(
       (stakeholderData) => {
-      response.render("stakeholder", {company: companyData.data, stakers: stakeholderData.data });
-
-    // Render person.ejs uit de views map en geef de opgehaalde data mee als variable, genaamd bedrijf
-    });
-  })
+        response.render("stakeholder", {
+          company: companyData.data,
+          stakers: stakeholderData.data,
+        });
+      }
+    );
+  });
 });
 
 app.post("/stakeholder/:id", async function (request, response) {
-  try {
-    const bedrijfId = request.params.id;
-    const medewerkers = request.body.medewerkers;
-    const financiers = request.body.financiers;
-    const leveranciers = request.body.leveranciers;
-    const klanten = request.body.klanten;
-    const omgeving = request.body.omgeving;
-    const name = request.body.message;
-    const stakeholder = [];
-    let aangevinkteRadiobox;
-    if (medewerkers) {
-        aangevinkteRadiobox = "medewerkers";
-    } else if (financiers) {
-        aangevinkteRadiobox = "financiers";
-    } else if (leveranciers) {
-        aangevinkteRadiobox = "leveranciers";
-    } else if (klanten) {
-        aangevinkteRadiobox = "klanten";
-    } else if (omgeving) {
-        aangevinkteRadiobox = "omgeving";
-    }
-    
-    console.log('Bedrijf: ' + bedrijfId);
-    console.log('Type: ' + aangevinkteRadiobox);
-    console.log('Naam: ' + name)
-
-
-    stakeholder.push(bedrijfId, aangevinkteRadiobox, name);
-// Hier een push naar de server, hoe doe ik dat bro?!
-// Yassir, deze drie variabelen heb je nodig:
-// bedrijfId
-// aangevinkteRadiobox 👊
-// name
-fetch('https://fdnd-agency.directus.app/items/hf_stakeholders', {
-  method: 'POST',
-  body: JSON.stringify({
-    company_id: bedrijfId,
-    type: aangevinkteRadiobox,
-    name: name
-  }),
-  headers: {
-    'Content-type': 'application/json; charset=UTF-8'
+  const bedrijfId = request.params.id;
+  const medewerkers = request.body.medewerkers;
+  const financiers = request.body.financiers;
+  const leveranciers = request.body.leveranciers;
+  const klanten = request.body.klanten;
+  const omgeving = request.body.omgeving;
+  const name = request.body.message;
+  const stakeholder = [];
+  let aangevinkteRadiobox;
+  if (medewerkers) {
+    aangevinkteRadiobox = "medewerkers";
+  } else if (financiers) {
+    aangevinkteRadiobox = "financiers";
+  } else if (leveranciers) {
+    aangevinkteRadiobox = "leveranciers";
+  } else if (klanten) {
+    aangevinkteRadiobox = "klanten";
+  } else if (omgeving) {
+    aangevinkteRadiobox = "omgeving";
   }
-}).then((postReponse) => {
-  response.redirect(303, '/bedrijf/' + bedrijfId)
-})
 
+  console.log("Bedrijf: " + bedrijfId);
+  console.log("Type: " + aangevinkteRadiobox);
+  console.log("Naam: " + name);
 
+  stakeholder.push(bedrijfId, aangevinkteRadiobox, name);
 
+  fetch("https://fdnd-agency.directus.app/items/hf_stakeholders", {
+    method: "POST",
+    body: JSON.stringify({
+      company_id: bedrijfId,
+      type: aangevinkteRadiobox,
+      name: name,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  }).then((postReponse) => {
 
-
-
-
-    console.log(stakeholder);
-  } catch (error) {
-    console.error("Error handling POST request:", error);
-    response.status(500).send("Error handling POST request");
-  }
+  });
+  console.log(stakeholder);
 });
 
 // Als we vanuit de browser een POST doen op de detailpagina van een persoon
-// Als we vanuit de browser een POST doen op de detailpagina van een persoon
-app.post("/bedrijf/:id", async function (request, response) {
-  try {
-	const bedrijfId = request.body.bedrijf;
+app.post("/dashboard/:id", async function (request, response) {
+  const bedrijfId = request.body.bedrijf;
   console.log(bedrijfId);
-
-
-
-  } catch (error) {
-    console.error("Error handling POST request:", error);
-    response.status(500).send("Error handling POST request");
-  }
 });
 
 // Stel het poortnummer in waar express op moet gaan luisteren
