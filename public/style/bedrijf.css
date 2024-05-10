@@ -182,3 +182,55 @@ body {
     height: 2px;
   }
 }
+
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 0px;
+  margin: 1em;
+  }
+
+  .hand-print {
+    height: 30em;
+    width: 100%;
+    background-color: #519879;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .foot-print {
+    height: 30em;
+    width: 100%;
+    background-color: #FB8B24;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inside-parent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    }
+
+  .handprint-inside {
+    background-color: #519879;
+    border-radius: 10px;
+  }
+
+  .footprint-inside {
+    background-color: #FB8B24;
+    border-radius: 10px;
+  }

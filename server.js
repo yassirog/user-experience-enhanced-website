@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 const apiUrl = "https://fdnd-agency.directus.app/items/";
 const sdgList = apiUrl + "hf_sdgs";
 const companyList = apiUrl + "hf_companies";
-const stakeholders = apiUrl + "hf_stakeholders";
+const stakeholders = apiUrl + "hf_stakeholders?fields=*.*.*.*`";
 
 // GET && POST voor Index
 app.get("/", function (request, response) {
@@ -40,7 +40,7 @@ app.get("/", function (request, response) {
   });
 });
 
-app.post("/", async function (request, response) {
+app.post("/", function (request, response) {
   const bedrijfId = request.body.companies;
 
   console.log(bedrijfId);
@@ -62,7 +62,7 @@ app.get("/dashboard/:id", function (request, response) {
   });
 });
 
-app.post("/dashboard/:id", async function (request, response) {
+app.post("/dashboard/:id", function (request, response) {
   console.log(bedrijfId);
   response.redirect("/dashboard/" + bedrijfId);
 });
@@ -81,7 +81,7 @@ app.get("/stakeholder/:id", function (request, response) {
   });
 });
 
-app.post("/stakeholder/:id", async function (request, response) {
+app.post("/stakeholder/:id", function (request, response) {
   const bedrijfId = request.params.id;
   const medewerkers = request.body.medewerkers;
   const financiers = request.body.financiers;
@@ -126,7 +126,7 @@ app.post("/stakeholder/:id", async function (request, response) {
 });
 
 // Als we vanuit de browser een POST doen op de detailpagina van een persoon
-app.post("/dashboard/:id", async function (request, response) {
+app.post("/dashboard/:id", function (request, response) {
   const bedrijfId = request.body.bedrijf;
   console.log(bedrijfId);
 });
